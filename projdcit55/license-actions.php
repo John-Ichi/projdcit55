@@ -1,6 +1,5 @@
 <?php
 include '_functions.php';
-
 if (!isset($_GET['serial-number'])) {
     header('Location: admin-db.php');
 } else {
@@ -32,318 +31,360 @@ checkSuspensionRevocationDeadlines();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProjectLisensya</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-container">
+                <i class="fas fa-id-card logo-icon"></i>
+                <h1 class="logo-text">Project<span>Lisensya</span></h1>
+            </div>
+            <nav class="header-actions">
+                <a href="admin-db.php" class="return-btn">
+                    <i class="fas fa-arrow-left"></i> Dashboard
+                </a>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container">
-
-        <div class="row">
-            <div class="col">
-                <p><b>Manage License For:</b> <?php echo $drivername; echo " [" . $serialnum . "]"?></p>
-            </div>
-            <div class="col">
-                <p><b>Sex:</b> <?php echo $sex?></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <p><b>License Number:</b> <?php echo $licensenum?></p>
-            </div>
-            <div class="col">
-                <p><b>Status:</b> <?php echo $status?></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <p><b>Date Registered:</b> <?php echo $dateregistered?></p>
-            </div>
-            <div class="col">
-                <p><b>Date Renewed:</b> <?php echo $daterenewed?></p>
-            </div>
-            <div class="col">
-                <p><b>Expiration Date:</b> <?php echo $expirationdate?></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <p><b>Address:</b> <?php echo $driveraddress?></p>
-            </div>
-        </div>
-        <div class="row">
-            
-            <div class="col">
-
-            <?php
-            if ($status == 'Revoked') {
-                echo "
-            <div class='row'>
-                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#unrevokeModal'>Unrevoke</button>
-            </div>
-                ";
-            } else {
-                if ($status == 'Suspended') {
-                    echo "
-                <div class='row'>
-                    <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#unsuspendModal'>Unsuspend</button>
+    <main class="app-container">
+        <section class="driver-profile">
+            <div class="profile-header">
+                <div class="driver-avatar">
+                    <i class="fas fa-user-circle"></i>
                 </div>
-                    ";
-                } else {
-                    echo "
-                <div class='row'>
-                    <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#renewModal'>Renew</button>
+                <div class="driver-meta">
+                    <h2><?php echo $drivername; ?></h2>
+                    <p class="license-badge">License: <?php echo $licensenum; ?></p>
+                    <p class="status-badge status-<?php echo strtolower($status); ?>">
+                        <?php echo $status; ?>
+                    </p>
                 </div>
-                <div class='row'>
-                    <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#suspendModal'>Suspend</button>
-                </div>
-                    ";
-                }
-                echo "
-            <div class='row'>
-                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#revokeModal'>Revoke</button>
-            </div>
-                ";
-            }
-            ?>
-
-            <div class="row">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fileViolationModal">File Violation</button>
-            </div>
-            <div class="row">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editInformationModal">Edit Information</button>
-            </div>
-            <div class="row">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal">Delete Record</button>
-            </div>  
             </div>
 
-            <div class="col-10">
-                <table class="table">
-                    <tr>
-                        <th>ID</th>
-                        <th>Violation</th>
-                        <th>Penalty</th>
-                        <th>Deadline for Settlement</th>
-                        <th>Resolved</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    <?php viewLicenseViolations($serialnum)?>
+            <div class="profile-details">
+                <div class="detail-card">
+                    <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Sex</span>
+                            <span class="detail-value"><?php echo $sex; ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Address</span>
+                            <span class="detail-value"><?php echo $driveraddress; ?></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <h3><i class="fas fa-calendar-alt"></i> License Dates</h3>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Registered</span>
+                            <span class="detail-value"><?php echo $dateregistered; ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Renewed</span>
+                            <span class="detail-value"><?php echo $daterenewed; ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Expires</span>
+                            <span class="detail-value"><?php echo $expirationdate; ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="action-section">
+            <h3><i class="fas fa-cog"></i> License Actions</h3>
+            <div class="action-grid">
+                <?php if ($status == 'Revoked'): ?>
+                    <button class="action-btn success" data-modal="unrevokeModal">
+                        <i class="fas fa-undo"></i> Unrevoke
+                    </button>
+                <?php elseif ($status == 'Suspended'): ?>
+                    <button class="action-btn success" data-modal="unsuspendModal">
+                        <i class="fas fa-undo"></i> Unsuspend
+                    </button>
+                <?php else: ?>
+                    <button class="action-btn primary" data-modal="renewModal">
+                        <i class="fas fa-sync-alt"></i> Renew
+                    </button>
+                    <button class="action-btn warning" data-modal="suspendModal">
+                        <i class="fas fa-pause-circle"></i> Suspend
+                    </button>
+                <?php endif; ?>
+                
+                <?php if ($status != 'Revoked'): ?>
+                    <button class="action-btn danger" data-modal="revokeModal">
+                        <i class="fas fa-ban"></i> Revoke
+                    </button>
+                <?php endif; ?>
+                
+                <button class="action-btn secondary" data-modal="fileViolationModal">
+                    <i class="fas fa-exclamation-triangle"></i> File Violation
+                </button>
+                <button class="action-btn secondary" data-modal="editInformationModal">
+                    <i class="fas fa-edit"></i> Edit Information
+                </button>
+                <button class="action-btn danger" data-modal="deleteLicenseRecordModal">
+                    <i class="fas fa-trash-alt"></i> Delete Record
+                </button>
+            </div>
+        </section>
+
+        <section class="violations-section">
+            <div class="section-header">
+                <h3><i class="fas fa-clipboard-list"></i> Violation History</h3>
+            </div>
+            <div class="table-container">
+                <table class="violations-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Violation</th>
+                            <th>Penalty</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php viewLicenseViolations($serialnum); ?>
+                    </tbody>
                 </table>
             </div>
+        </section>
+    </main>
 
-        </div>
-        <a href="admin-db.php">Return</a>
-    </div>
-
-    <div class="modal" tabindex="-1" id="renewModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">License Renewal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Extend validity by 5 years for license with serial number <?php echo $serialnum; ?>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form method="post" action="_functions.php">
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-                        <input type="text" name="date-of-expiry" value="<?php echo $expirationdate?>" style="display: none;">
-                        <button type="submit" class="btn btn-primary" name="renewLicense" value="true">Confirm</button>
-                    </form>
-                </div>
+    <div class="modal" id="renewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-sync-alt"></i> License Renewal</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Extend validity by 5 years for license with serial number <strong><?php echo $serialnum; ?></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <form method="post" action="_functions.php">
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                    <input type="hidden" name="date-of-expiry" value="<?php echo $expirationdate; ?>">
+                    <button type="submit" class="btn primary" name="renewLicense" value="true">
+                        <i class="fas fa-check"></i> Confirm Renewal
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
-    <div class="modal" tabindex="-1" id="suspendModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">License Suspension</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Suspend license with serial number <?php echo $serialnum?>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form method="post" action="_functions.php">
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-                        <button type="submit" class="btn btn-primary" name="suspendLicense" value="true">Confirm</button>
-                    </form>
-                </div>
+    <div class="modal" id="suspendModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-pause-circle"></i> Suspend License</h3>
+                <button class="close-btn">&times;</button>
             </div>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1" id="unsuspendModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Suspend License</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Unsuspend license with serial number <?php echo $serialnum?>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form method="post" action="_functions.php">
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-                        <button type="submit" class="btn btn-primary" name="unsuspendLicense" value="true">Confirm</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1" id="revokeModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Suspend License</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Revoke license with serial number <?php echo $serialnum?>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form method="post" action="_functions.php">
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-                        <button type="submit" class="btn btn-primary" name="revokeLicense" value="true">Confirm</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1" id="unrevokeModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Suspend License</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Unrevoke license with serial number <?php echo $serialnum?>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form method="post" action="_functions.php">
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-                        <button type="submit" class="btn btn-primary" name="unrevokeLicense" value="true">Confirm</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1" id="fileViolationModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Suspend License</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>File violation for license with serial number <?php echo $serialnum?>?</p>
-                    
-                    <form method="post" action="_functions.php">
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-
-                        <label for="violationSelect" class="form-label">Violation</label>
-                        <select class="form-select" id="violationSelect" name="violation-committed" required>
-                            <option value="" style="display: none;" selected disabled>select violation committed</option>
-                            <option value="Moving Violation">Moving Violation (e.g. speeding)</option>
-                            <option value="Non-moving Violation">Non-Moving Violation (e.g. illegal parking)</option>
-                        </select>
-
-                        <label for="penaltySelect" class="form-label">Penalty</label>
-                        <select class="form-select" id="penaltySelect" name="alloted-penalty" required>
-                            <option value="" style="display: none;" selected disabled>alloted penalty</option>
-                            <option value="Monetary Fine">Monetary Fine</option>
-                            <option value="License Suspension">License Suspension</option>
-                            <option value="License Revocation">License Revocation</option>
-                        </select>
-
-                        <label for="violationDeadline" class="form-label">Deadline for settlement</label>
-                        <input type="date" id="violationDeadline" class="form-control" name="settlement-deadline" required>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-                        <input type="text" name="license-number" value="<?php echo $licensenum?>" style="display: none;">
-                        <button type="submit" class="btn btn-primary" name="fileViolation" value="true">Confirm</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1" id="editInformationModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Information</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="_functions.php">
-
-                    <label for="driverName" class="form-label">Name of Driver</label>
-                    <input type="text" id="driverName" class="form-control" name="name" value="<?php echo $drivername?>" required>
-
-                    <div class="form-check">
-                        <label for="radioOption1" class="form-check-label">Male</label>
-                        <input type="radio" id="radioOption1" class="form-check-input" name="sex" value="Male" <?php echo $sex == 'Male' ? 'checked' : ''?>>
+            <div class="modal-body">
+                <p>Are you sure you want to suspend license <strong><?php echo $licensenum; ?></strong>?</p>
+                <form method="post" action="_functions.php" class="suspend-form">
+                    <div class="form-group">
+                        <label for="suspendReason">Reason for suspension:</label>
+                        <textarea id="suspendReason" name="suspend-reason" required></textarea>
                     </div>
-
-                    <div class="form-check">
-                        <label for="radioOption2" class="form-check-label">Female</label>
-                        <input type="radio" id="radioOption2" class="form-check-input" name="sex" value="Female" <?php echo $sex == 'Female' ? 'checked' : ''?>>
+                    <div class="form-group">
+                        <label for="suspendDuration">Duration (days):</label>
+                        <input type="number" id="suspendDuration" name="suspend-duration" min="1" required>
                     </div>
-
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" id="address" class="form-control" name="address" value="<?php echo $driveraddress?>" required>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
-                        <button type="submit" class="btn btn-primary" name="updateLicenseInformation" value="true">Update</button>
-                    </form>
-                </div>
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <button type="submit" class="btn warning" form="suspend-form" name="suspendLicense" value="true">
+                    <i class="fas fa-check"></i> Confirm Suspension
+                </button>
             </div>
         </div>
     </div>
 
-    <div class="modal" tabindex="-1" id="deleteLicenseRecordModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Unregister license with serial number <?php echo $serialnum?>? [NOTE: THIS WILL DELETE ALL RELATED RECORDS]</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form method="post" action="_functions.php">
-                        <input type="text" name="serial-number" value="<?php echo $serialnum ?>" style="display: none;">
-                        <input type="text" name="license-number" value="<?php echo $licensenum ?>" style="display: none">
-                        <button type="submit" class="btn btn-primary" name="deleteLicense" value="true">Confirm</button>
-                    </form>
-                </div>
+    <div class="modal" id="unsuspendModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-undo"></i> Unsuspend License</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to unsuspend license <strong><?php echo $licensenum; ?></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <form method="post" action="_functions.php">
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                    <button type="submit" class="btn success" name="unsuspendLicense" value="true">
+                        <i class="fas fa-check"></i> Confirm Unsuspension
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
+    <div class="modal" id="revokeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-ban"></i> Revoke License</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently revoke license <strong><?php echo $licensenum; ?></strong>?</p>
+                <form method="post" action="_functions.php" class="revoke-form">
+                    <div class="form-group">
+                        <label for="revokeReason">Reason for revocation:</label>
+                        <textarea id="revokeReason" name="revoke-reason" required></textarea>
+                    </div>
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <button type="submit" class="btn danger" form="revoke-form" name="revokeLicense" value="true">
+                    <i class="fas fa-check"></i> Confirm Revocation
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="unrevokeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-undo"></i> Unrevoke License</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to unrevoke license <strong><?php echo $licensenum; ?></strong>?</p>
+                <p class="warning-text">This will restore the license to active status.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <form method="post" action="_functions.php">
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                    <button type="submit" class="btn success" name="unrevokeLicense" value="true">
+                        <i class="fas fa-check"></i> Confirm Unrevocation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="fileViolationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> File Violation</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="_functions.php" class="violation-form">
+                    <div class="form-group">
+                        <label for="violationType">Violation Type:</label>
+                        <select id="violationType" name="violation-type" required>
+                            <option value="">Select violation type</option>
+                            <option value="Speeding">Speeding</option>
+                            <option value="Reckless Driving">Reckless Driving</option>
+                            <option value="DUI">Driving Under Influence</option>
+                            <option value="Unregistered Vehicle">Unregistered Vehicle</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="violationDescription">Description:</label>
+                        <textarea id="violationDescription" name="violation-description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="violationPenalty">Penalty:</label>
+                        <select id="violationPenalty" name="violation-penalty" required>
+                            <option value="">Select penalty</option>
+                            <option value="Fine">Fine</option>
+                            <option value="Suspension">License Suspension</option>
+                            <option value="Community Service">Community Service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="violationDeadline">Deadline:</label>
+                        <input type="date" id="violationDeadline" name="violation-deadline" required>
+                    </div>
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                    <input type="hidden" name="license-number" value="<?php echo $licensenum; ?>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <button type="submit" class="btn primary" form="violation-form" name="fileViolation" value="true">
+                    <i class="fas fa-check"></i> File Violation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editInformationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Driver Information</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="_functions.php" class="edit-form">
+                    <div class="form-group">
+                        <label for="editDriverName">Driver Name:</label>
+                        <input type="text" id="editDriverName" name="driver-name" value="<?php echo $drivername; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDriverAddress">Address:</label>
+                        <textarea id="editDriverAddress" name="driver-address" required><?php echo $driveraddress; ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDriverSex">Sex:</label>
+                        <select id="editDriverSex" name="driver-sex" required>
+                            <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
+                            <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <button type="submit" class="btn primary" form="edit-form" name="editDriverInfo" value="true">
+                    <i class="fas fa-check"></i> Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="deleteLicenseRecordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-trash-alt"></i> Delete License Record</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently delete the license record for <strong><?php echo $drivername; ?></strong>?</p>
+                <p class="warning-text">This action cannot be undone. All associated data including violations will be deleted.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary close-modal">Cancel</button>
+                <form method="post" action="_functions.php">
+                    <input type="hidden" name="serial-number" value="<?php echo $serialnum; ?>">
+                    <button type="submit" class="btn danger" name="deleteLicenseRecord" value="true">
+                        <i class="fas fa-check"></i> Confirm Deletion
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
