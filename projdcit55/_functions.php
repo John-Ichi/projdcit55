@@ -67,6 +67,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register-driver'])) { 
     ";
 }
 
+function checkRegisteredLicense($serial_number) {
+    $conn = connect();
+    $sql =
+        "SELECT serialNumber
+        FROM tblicense
+        WHERE serialNumber='$serial_number'";
+    $rs = $conn->query($sql);
+
+    if ($rs->num_rows != 0) return true;
+    else return false;
+}
+
 function checkRegisteredDriver($license_number) { // Check if driver registered an account for their license
     $conn = connect();
     $sql =
@@ -149,6 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register-license'])) {
     ";
 }
 
+// License actions
 if (isset($_POST['renewLicense']) && $_POST['renewLicense'] == true) { // Extend license expiration
     $serial_number = $_POST['serial-number'];
     $prev_expiry = $_POST['date-of-expiry'];
@@ -223,19 +236,57 @@ if (isset($_POST['unrevokeLicense']) && $_POST['unrevokeLicense'] == true) { // 
     returnToLicenseActions($serial_number,"License unrevoked!");
 }
 
-if (isset($_POST['fileViolation']) && $_POST['fileViolation'] == true) {
+if (isset($_POST['fileViolation']) && $_POST['fileViolation'] == true) { // File violation
     $serial_number = $_POST['serial-number'];
     $sql =
         "INSERT INTO tbviolations
-        (`licenseSN`,`violationCommitted`,`penaltyAlloted`,`settlementDeadline`)
+        (`licenseSN`,`licenseNumber`,`violationCommitted`,`penaltyAlloted`,`settlementDeadline`)
         VALUES
-        (?,?,?,?)";
+        (?,?,?,?,?)";
     $file_violation = $conn->prepare($sql);;
-    $file_violation->bind_param('ssss',$serial_number,$_POST['violation-committed'],$_POST['alloted-penalty'],$_POST['settlement-deadline']);
+    $file_violation->bind_param('sssss',$serial_number,$_POST['license-number'],$_POST['violation-committed'],$_POST['alloted-penalty'],$_POST['settlement-deadline']);
     $file_violation->execute();
 
     checkSuspensionRevocationDeadlines();
     returnToLicenseActions($serial_number,"Violation registered!");
+}
+
+if (isset($_GET['updateLicenseInformation']) && $_GET['updateLicenseInformation'] == true) { // Update license record
+    $serial_number = $_GET['serial-number'];
+    $sql =
+        "UPDATE tblicense
+        SET
+        name='$_GET[name]',
+        sex='$_GET[sex]',
+        address='$_GET[address]'
+        WHERE serialNumber='$serial_number'";
+    $rs = $conn->query($sql);
+
+    returnToLicenseActions($serial_number,"Information updated!");
+}
+
+if (isset($_POST['deleteLicense']) && $_POST['deleteLicense'] == true) { // Delete license records
+    $serial_number = $_POST['serial-number'];
+    $license_number = $_POST['license-number'];
+
+    $check = checkUnresolvedViolations($serial_number);
+    if ($check == true) {
+        returnToLicenseActions($serial_number,"Unresolved violation(s)!");
+        return;   
+    }
+
+    $sql =
+        "DELETE FROM tbviolations WHERE licenseSN='$serial_number';
+        DELETE FROM tblogininfo WHERE licenseNumber='$license_number';
+        DELETE FROM tblicense WHERE serialNumber='$serial_number'";
+    $rs = $conn->multi_query($sql);
+
+    echo "
+        <script>
+            alert('All records deleted for license with serial number " . $serial_number . "!');
+            window.location.href = 'admin-db.php';
+        </script>
+    ";
 }
 
 function viewLicenseViolations($serial_number) {
@@ -279,6 +330,7 @@ function viewLicenseViolations($serial_number) {
     }
 }
 
+// Violation actions
 if (isset($_GET['resolve-violation']) && $_GET['resolve-violation'] == true) { // Resolve license violation
     $violation_id = $_GET['violation-id'];
     $sql =
@@ -336,6 +388,10 @@ function checkUnresolvedViolations($serial_number) { // Check unresolved violati
         "SELECT resolved FROM tbviolations WHERE licenseSN='$serial_number'";
     $rs = $conn->query($sql);
 
+    if ($rs->num_rows === 0) {
+        $unresolved_violations = false;
+    }
+
     while ($row = $rs->fetch_assoc()) {
         if ($row['resolved'] == 0) {
             $unresolved_violations = true;
@@ -355,7 +411,7 @@ function viewAllLicense() {
     if ($rs->num_rows === 0) {
         echo "
             <tr>
-                <td colspan='7' style='text-align: center;'><i>no registered license</td>
+                <td colspan='8' style='text-align: center;'><i>no registered license</td>
             </tr>
         ";
     } else {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2025 at 08:43 AM
+-- Generation Time: Jun 16, 2025 at 12:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `dcit55_project`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbadmin`
+--
+
+CREATE TABLE `tbadmin` (
+  `id` int(11) NOT NULL,
+  `admin` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbadmin`
+--
+
+INSERT INTO `tbadmin` (`id`, `admin`, `password`) VALUES
+(1, 'admin', '12345');
 
 -- --------------------------------------------------------
 
@@ -44,8 +63,9 @@ CREATE TABLE `tblicense` (
 --
 
 INSERT INTO `tblicense` (`serialNumber`, `name`, `sex`, `address`, `licenseNumber`, `dateRegistered`, `dateRenewed`, `expirationDate`, `status`) VALUES
-(7, 'John Ichiro Mananquil', 'Male', 'Naic, Cavite', '00000001', '2025-06-12', '2025-06-13', '2035-06-13', 'Valid'),
-(8, 'Ceejay Cervantes', 'Male', 'Naic, Cavite', '00000002', '2025-06-13', NULL, '2030-06-13', 'Valid');
+(11, 'John Ichiro Mananquil', 'Female', 'Naic, Cavite', '00000001', '2025-06-16', '2025-06-16', '2035-06-16', 'Valid'),
+(12, 'Ceejay Cervantes', 'Male', 'Silang, Cavite', '00000002', '2025-06-16', NULL, '2030-06-16', 'Suspended'),
+(13, 'Dummy License', 'Female', 'Tanza, Cavite', '00000003', '2025-06-16', NULL, '2030-06-16', 'Revoked');
 
 -- --------------------------------------------------------
 
@@ -59,13 +79,6 @@ CREATE TABLE `tblogininfo` (
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tblogininfo`
---
-
-INSERT INTO `tblogininfo` (`userId`, `licenseNumber`, `password`) VALUES
-(1, '00000001', '$2y$10$lY99966tmV/mpmCxbUSuF.pBCUm668sYw.y9ZYNZFK8CdnK.fKMkW');
-
 -- --------------------------------------------------------
 
 --
@@ -75,6 +88,7 @@ INSERT INTO `tblogininfo` (`userId`, `licenseNumber`, `password`) VALUES
 CREATE TABLE `tbviolations` (
   `violationId` int(11) NOT NULL,
   `licenseSN` int(11) NOT NULL,
+  `licenseNumber` varchar(8) NOT NULL,
   `violationCommitted` enum('Moving Violation','Non-moving Violation') NOT NULL,
   `penaltyAlloted` enum('Monetary Fine','License Suspension','License Revocation') NOT NULL,
   `settlementDeadline` date NOT NULL,
@@ -84,6 +98,12 @@ CREATE TABLE `tbviolations` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tbadmin`
+--
+ALTER TABLE `tbadmin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tblicense`
@@ -104,17 +124,24 @@ ALTER TABLE `tblogininfo`
 --
 ALTER TABLE `tbviolations`
   ADD PRIMARY KEY (`violationId`),
-  ADD KEY `licenseSerialNumber` (`licenseSN`);
+  ADD KEY `licenseSerialNumber` (`licenseSN`),
+  ADD KEY `licenseNumber` (`licenseNumber`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `tbadmin`
+--
+ALTER TABLE `tbadmin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `tblicense`
 --
 ALTER TABLE `tblicense`
-  MODIFY `serialNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `serialNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tblogininfo`
@@ -126,7 +153,7 @@ ALTER TABLE `tblogininfo`
 -- AUTO_INCREMENT for table `tbviolations`
 --
 ALTER TABLE `tbviolations`
-  MODIFY `violationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `violationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -142,7 +169,8 @@ ALTER TABLE `tblogininfo`
 -- Constraints for table `tbviolations`
 --
 ALTER TABLE `tbviolations`
-  ADD CONSTRAINT `tbviolations_ibfk_1` FOREIGN KEY (`licenseSN`) REFERENCES `tblicense` (`serialNumber`);
+  ADD CONSTRAINT `tbviolations_ibfk_1` FOREIGN KEY (`licenseSN`) REFERENCES `tblicense` (`serialNumber`),
+  ADD CONSTRAINT `tbviolations_ibfk_2` FOREIGN KEY (`licenseNumber`) REFERENCES `tblicense` (`licenseNumber`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

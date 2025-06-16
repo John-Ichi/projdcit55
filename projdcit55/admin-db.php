@@ -15,7 +15,11 @@ checkSuspensionRevocationDeadlines();
 
     <div class="container">
 
-    <h1>Register License</h1>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">ProjectLisensya</a>
+    </nav>
+
+    <h3>Register License</h3>
         
         <div class="row">
             
@@ -52,23 +56,91 @@ checkSuspensionRevocationDeadlines();
             </div>
         
         </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="filterSearch" class="form-label">search by name</label>
+                <input type="text" id="filterSearch" class="form-control">
+            </div>
+            <div class="col">
+                <label for="filterSelect" class="form-label">filter by status</label>
+                <select id="filterSelect" class="form-control">
+                    <option value="All" selected>All</option>
+                    <option value="Valid">Valid</option>
+                    <option value="Suspended">Suspended</option>
+                    <option value="Revoked">Revoked</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Address</th>
+                    <th>License Number</th>
+                    <th>Date Registered</th>
+                    <th>Date Renewed</th>
+                    <th>Expiration Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+        </div>
     
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>Sex</th>
-                <th>Address</th>
-                <th>License Number</th>
-                <th>Date Registered</th>
-                <th>Date Renewed</th>
-                <th>Expiration Date</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
             <?php viewAllLicense(); ?>
         </table>
-        <a href="index.php">Logout</a>
+
+        <div class="row">
+            <a href="index.php">Logout</a>
+        </div>
     </div>
+
+    <script>
+        const filterSearch = document.getElementById('filterSearch');
+        filterSearch.addEventListener('input', function() {
+            let filterSearchValue = filterSearch.value.toLowerCase();
+            const tableRows = document.querySelectorAll('tr');
+            tableRows.forEach(item => {
+                if (filterSearchValue == '') {
+                    item.style.display = 'table-row';
+                } else {
+                    if (item.querySelector('td:nth-child(1)') == null) {
+                        return null;
+                    } else {
+                        let name = item.querySelector('td:nth-child(1)').innerHTML.toLowerCase();
+                        if (name.includes(filterSearchValue)) {
+                            console.log(name);
+                            item.style.display = 'table-row';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        });
+
+        const filterSelect = document.getElementById('filterSelect');
+        filterSelect.addEventListener('change', function() {
+            const filterSelectValue = filterSelect.value;
+            const tableRows = document.querySelectorAll('tr');
+            tableRows.forEach(item => {
+                if (filterSelectValue == 'All') {
+                    item.style.display = 'table-row';
+                } else {
+                    if (item.querySelector('td:nth-child(8') == null) {
+                        return null;
+                    } else {
+                        if (item.querySelector('td:nth-child(8)').innerHTML == filterSelectValue) {
+                            item.style.display = 'table-row';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

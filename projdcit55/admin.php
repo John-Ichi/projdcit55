@@ -14,12 +14,12 @@ $conn = connect();
 
     <div class="container">
         <h1>Admin</h1>
-        <form action="admin-db.php">
+        <form method="post" action="_functions.php">
             <label for="username" class="form-label">Username</label>
-            <input type="text" id="username" class="form-control">
+            <input type="text" id="username" class="form-control" required>
             <label for="password" class="form-label">Password</label>
-            <input type="text" id="password" class="form-control">
-            <button type="submit" class="btn btn-primary">Login</button>
+            <input type="text" id="password" class="form-control" required>
+            <button type="submit" name="admin-login" class="btn btn-primary">Login</button>
         </form>
         <a href="index.php">Home</a>
     </div>

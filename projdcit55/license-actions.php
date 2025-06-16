@@ -7,16 +7,21 @@ if (!isset($_GET['serial-number'])) {
     if ($_GET['serial-number'] == '') {
         header('Location: admin-db.php');
     } else {
-        $driverinfo = getLicenseInfo($_GET['serial-number']);
-        $serialnum = $driverinfo[0]['serialNumber'];
-        $drivername = $driverinfo[0]['name'];
-        $sex = $driverinfo[0]['sex'];
-        $driveraddress = $driverinfo[0]['address'];
-        $licensenum = $driverinfo[0]['licenseNumber'];
-        $dateregistered = $driverinfo[0]['dateRegistered'];
-        $daterenewed = $driverinfo[0]['dateRenewed'] == null ? 'no record' : $driverinfo[0]['dateRenewed'];
-        $expirationdate = $driverinfo[0]['expirationDate'];
-        $status = $driverinfo[0]['status'];
+        $check = checkRegisteredLicense($_GET['serial-number']);
+        if ($check !=  true)  {
+            header('Location: admin-db.php');
+        } else {
+            $driverinfo = getLicenseInfo($_GET['serial-number']);
+            $serialnum = $driverinfo[0]['serialNumber'];
+            $drivername = $driverinfo[0]['name'];
+            $sex = $driverinfo[0]['sex'];
+            $driveraddress = $driverinfo[0]['address'];
+            $licensenum = $driverinfo[0]['licenseNumber'];
+            $dateregistered = $driverinfo[0]['dateRegistered'];
+            $daterenewed = $driverinfo[0]['dateRenewed'] == null ? 'no record' : $driverinfo[0]['dateRenewed'];
+            $expirationdate = $driverinfo[0]['expirationDate'];
+            $status = $driverinfo[0]['status'];
+        }
     }
 }
 checkSuspensionRevocationDeadlines();
@@ -36,10 +41,10 @@ checkSuspensionRevocationDeadlines();
 
         <div class="row">
             <div class="col">
-                <p><b>Manage License For:</b> <?php echo $drivername; echo " [" . $serialnum . "]";?></p>
+                <p><b>Manage License For:</b> <?php echo $drivername; echo " [" . $serialnum . "]"?></p>
             </div>
             <div class="col">
-                <p><b>Sex:</b> <?php echo $sex;?></p>
+                <p><b>Sex:</b> <?php echo $sex?></p>
             </div>
         </div>
         <div class="row">
@@ -48,6 +53,14 @@ checkSuspensionRevocationDeadlines();
             </div>
             <div class="col">
                 <p><b>Status:</b> <?php echo $status?></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p><b>Date Registered:</b> <?php echo $dateregistered?></p>
+            </div>
+            <div class="col">
+                <p><b>Date Renewed:</b> <?php echo $daterenewed?></p>
             </div>
             <div class="col">
                 <p><b>Expiration Date:</b> <?php echo $expirationdate?></p>
@@ -101,7 +114,7 @@ checkSuspensionRevocationDeadlines();
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editInformationModal">Edit Information</button>
             </div>
             <div class="row">
-                <button class="btn btn-primary">Delete Record</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal">Delete Record</button>
             </div>  
             </div>
 
@@ -116,7 +129,7 @@ checkSuspensionRevocationDeadlines();
                         <th></th>
                         <th></th>
                     </tr>
-                    <?php viewLicenseViolations($serialnum); ?>
+                    <?php viewLicenseViolations($serialnum)?>
                 </table>
             </div>
 
@@ -132,7 +145,7 @@ checkSuspensionRevocationDeadlines();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Extend validity by 5 years for license with SN: <?php echo $serialnum; ?>?</p>
+                    <p>Extend validity by 5 years for license with serial number <?php echo $serialnum; ?>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -154,7 +167,7 @@ checkSuspensionRevocationDeadlines();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Suspend license with SN: <?php echo $serialnum; ?>?</p>
+                    <p>Suspend license with serial number <?php echo $serialnum?>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -175,7 +188,7 @@ checkSuspensionRevocationDeadlines();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Unsuspend license with SN: <?php echo $serialnum; ?>?</p>
+                    <p>Unsuspend license with serial number <?php echo $serialnum?>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -196,7 +209,7 @@ checkSuspensionRevocationDeadlines();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Revoke license with SN: <?php echo $serialnum; ?>?</p>
+                    <p>Revoke license with serial number <?php echo $serialnum?>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -217,7 +230,7 @@ checkSuspensionRevocationDeadlines();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Unrevoke license with SN: <?php echo $serialnum; ?>?</p>
+                    <p>Unrevoke license with serial number <?php echo $serialnum?>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -238,7 +251,7 @@ checkSuspensionRevocationDeadlines();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>File violation for license with SN: <?php echo $serialnum; ?>?</p>
+                    <p>File violation for license with serial number <?php echo $serialnum?>?</p>
                     
                     <form method="post" action="_functions.php">
                         <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
@@ -265,6 +278,7 @@ checkSuspensionRevocationDeadlines();
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <input type="text" name="serial-number" value="<?php echo $serialnum?>" style="display: none;">
+                        <input type="text" name="license-number" value="<?php echo $licensenum?>" style="display: none;">
                         <button type="submit" class="btn btn-primary" name="fileViolation" value="true">Confirm</button>
                     </form>
                 </div>
@@ -307,7 +321,29 @@ checkSuspensionRevocationDeadlines();
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+
+    <div class="modal" tabindex="-1" id="deleteLicenseRecordModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Unregister license with serial number <?php echo $serialnum?>? [NOTE: THIS WILL DELETE ALL RELATED RECORDS]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form method="post" action="_functions.php">
+                        <input type="text" name="serial-number" value="<?php echo $serialnum ?>" style="display: none;">
+                        <input type="text" name="license-number" value="<?php echo $licensenum ?>" style="display: none">
+                        <button type="submit" class="btn btn-primary" name="deleteLicense" value="true">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
