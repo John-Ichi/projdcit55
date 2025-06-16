@@ -12,32 +12,51 @@ $conn = connect();
 </head>
 <body>
 
+    <header>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">ProjectLisensya</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin.php">Admin</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
     <div class="container">
-        <h1>Register</h1>
-        <form method="post" action="_functions.php">
-            
-            <label for="licenseNumber" class="form-label">License Number</label>
-            <input type="text" id="licenseNumber" class="form-control" name="license-number" minlength="8" maxlength="8" required>
-            
-            <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" class="form-control" name="password" minlength="8" required>
-            
-            <button type="submit" class="btn btn-primary" name="register-driver">Register</button>
-        </form>
-        <a href="admin.php">Admin</a>
-        <a href="login.php">Login</a>
+        <div class="row">
+            <div class="col d-flex justify-content-center align-items-center">
+                <h3>Register</h3>
+            </div>
+            <div class="col-7">
+
+                <form method="post" action="_functions.php">
+                    
+                    <label for="licenseNumber" class="form-label">License Number</label>
+                    <input type="text" id="licenseNumber" class="form-control" name="license-number" minlength="8" maxlength="8" required>
+                    
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" name="password" minlength="8" required>
+                    
+                    <button type="submit" class="btn btn-primary" name="register-driver" style="margin-top: 0.5rem;">Register</button>
+                    
+                </form>
+
+            </div>
+        </div>
     </div>
     
 </body>
 </html>
-
-<!--
-
-Pseudocode:
-1. Register to portal using license number
-2. Enter license number
-3. Enter a password
-4. Check if license number exists
-5. Register successful
-
--->

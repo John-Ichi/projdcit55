@@ -15,19 +15,49 @@ if (isset($_SESSION['driver']) && $_SESSION['driver'] != '') {
 </head>
 <body>
 
+    <header>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">ProjectLisensya</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin.php">Admin</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
     <div class="container">
-        <h1>User</h1>
-        <form method="post" action="_functions.php">
+        <div class="row">
+            <div class="col d-flex justify-content-center align-items-center">
+                <h3>User Login</h3>
+            </div>
+            <div class="col-7">
 
-            <label for="licenseNumber" class="form-label">License Number</label>
-            <input type="text" id="licenseNumber" class="form-control" name="license-number" required>
-            
-            <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" class="form-control" name="password" required>
+                <form method="post" action="_functions.php">
 
-            <button type="submit" class="btn btn-success" name="driver-login">Login</button>
-        </form>
-        <a href="index.php">Home</a>
+                    <label for="licenseNumber" class="form-label">License Number</label>
+                    <input type="text" id="licenseNumber" class="form-control" name="license-number" minlength="8" maxlength="8" required>
+                    
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" name="password" required>
+
+                    <button type="submit" class="btn btn-primary" name="driver-login" style="margin-top: 0.5rem;">Login</button>
+                </form>
+
+            </div>
+        </div>
     </div>
 
 </body>
