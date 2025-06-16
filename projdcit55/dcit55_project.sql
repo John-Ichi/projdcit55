@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2025 at 12:34 PM
+-- Generation Time: Jun 16, 2025 at 04:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,7 +65,8 @@ CREATE TABLE `tblicense` (
 INSERT INTO `tblicense` (`serialNumber`, `name`, `sex`, `address`, `licenseNumber`, `dateRegistered`, `dateRenewed`, `expirationDate`, `status`) VALUES
 (11, 'John Ichiro Mananquil', 'Female', 'Naic, Cavite', '00000001', '2025-06-16', '2025-06-16', '2035-06-16', 'Valid'),
 (12, 'Ceejay Cervantes', 'Male', 'Silang, Cavite', '00000002', '2025-06-16', NULL, '2030-06-16', 'Suspended'),
-(13, 'Dummy License', 'Female', 'Tanza, Cavite', '00000003', '2025-06-16', NULL, '2030-06-16', 'Revoked');
+(13, 'Dummy License', 'Female', 'Tanza, Cavite', '00000003', '2025-06-16', NULL, '2030-06-16', 'Revoked'),
+(16, 'TEST REGISTRATION', 'Female', 'Maragondon, Cavite', '00000004', '2025-06-16', NULL, '2030-06-16', 'Valid');
 
 -- --------------------------------------------------------
 
@@ -78,6 +79,16 @@ CREATE TABLE `tblogininfo` (
   `licenseNumber` varchar(8) NOT NULL,
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblogininfo`
+--
+
+INSERT INTO `tblogininfo` (`userId`, `licenseNumber`, `password`) VALUES
+(2, '00000001', '$2y$10$.4mLBNicBE3IY.hOkX7OBOEGuhXLP/qlVSsqqKoE1X1/DMjiJHkOa'),
+(3, '00000001', '$2y$10$.uMKNkKX/NxH0MkC1Fa4kOZOyc5Q6CwZmpNX/Nn06hmyVf3maTK2y'),
+(4, '00000001', '$2y$10$QI83E/Pyxi.VB5VYAOViSu11qU9KAqz.cmX6XPUqi2oRTewVGHRqy'),
+(5, '00000002', '$2y$10$ifF6e7l6s8/LdyX2bQc0D.M3QKTXWlu3OJhmbgRUZznaJy3hBS9u.');
 
 -- --------------------------------------------------------
 
@@ -94,6 +105,13 @@ CREATE TABLE `tbviolations` (
   `settlementDeadline` date NOT NULL,
   `resolved` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbviolations`
+--
+
+INSERT INTO `tbviolations` (`violationId`, `licenseSN`, `licenseNumber`, `violationCommitted`, `penaltyAlloted`, `settlementDeadline`, `resolved`) VALUES
+(24, 11, '00000001', 'Moving Violation', 'Monetary Fine', '2025-06-23', 0);
 
 --
 -- Indexes for dumped tables
@@ -141,19 +159,19 @@ ALTER TABLE `tbadmin`
 -- AUTO_INCREMENT for table `tblicense`
 --
 ALTER TABLE `tblicense`
-  MODIFY `serialNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `serialNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tblogininfo`
 --
 ALTER TABLE `tblogininfo`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbviolations`
 --
 ALTER TABLE `tbviolations`
-  MODIFY `violationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `violationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
