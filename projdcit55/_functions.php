@@ -22,11 +22,24 @@ function returnToLicenseActions($serial_number, $alertmessage) {
     ";
 }
 
+// User actions
 function checkDuplicateLicense($license_number) { // Check duplicate license
     $conn = connect();
     $sql =
         "SELECT licenseNumber
         FROM tblicense
+        WHERE licenseNumber='$license_number'";
+    $rs = $conn->query($sql);
+
+    if ($rs->num_rows != 0) return true;
+    else return false;
+}
+
+function checkAccountExists($license_number) {
+    $conn = connect();
+    $sql =
+        "SELECT licenseNumber
+        FROM tblogininfo
         WHERE licenseNumber='$license_number'";
     $rs = $conn->query($sql);
 
@@ -42,6 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register-driver'])) { 
         echo "
             <script>
                 alert('License does not exist!');
+                window.location.href = 'index.php';
+            </script>
+        ";
+        return;
+    }
+
+    $check_account = checkAccountExists($license_number);
+    if ($check_account == true) {
+        echo "
+            <script>
+                alert('Account already exists!');
                 window.location.href = 'index.php';
             </script>
         ";
@@ -65,18 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register-driver'])) { 
             window.location.href = 'index.php';
         </script>
     ";
-}
-
-function checkRegisteredLicense($serial_number) {
-    $conn = connect();
-    $sql =
-        "SELECT serialNumber
-        FROM tblicense
-        WHERE serialNumber='$serial_number'";
-    $rs = $conn->query($sql);
-
-    if ($rs->num_rows != 0) return true;
-    else return false;
 }
 
 function checkRegisteredDriver($license_number) { // Check if driver registered an account for their license
@@ -111,22 +123,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['driver-login'])) { // 
 
         if (password_verify($_POST['password'],$info['password'])) {
             $_SESSION['driver'] = $license_number;
-            echo "
-                <script>
-                    alert('Login successful!');
-                    window.location.href = 'user-db.php';
-                </script>
-            ";
+            header('Location: user-db.php');
         }
     }
 }
 
-if (isset($_GET['logoutDriver']) && $_GET['logoutDriver'] == true) {
-    unset($_SESSION['driver']);
-    header('Location: index.php');
+function getLicenseInfoUser($license_number) {
+    $conn = connect();
+    $sql =
+        "SELECT name, sex, address, licenseNumber, dateRegistered, dateRenewed, expirationDate, status
+        FROM tblicense
+        WHERE licenseNumber='$license_number'";
+    $rs = $conn->query($sql);
+    
+    while ($row = $rs->fetch_assoc()) {
+        $info[] = $row;
+    }
+
+    return $info;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register-license'])) { // Register driver's license [admin]
+function viewLicenseViolationsUser($license_number) {
+    $conn = connect();
+    $sql =
+        "SELECT * FROM tbviolations WHERE licenseNumber='$license_number'";
+    $rs = $conn->query($sql);
+
+    if ($rs->num_rows === 0) {
+        echo "
+            <tr>
+                <td colspan='5' style='text-align: center;'><i>no violations</td>
+            </tr>
+        ";
+    }
+
+    $count = 1;
+
+    while ($row = $rs->fetch_assoc()) {
+        echo "
+            <tr>
+                <td>" . $count ."</td>
+                <td>" . $row['violationCommitted'] ."</td>
+                <td>" . $row['penaltyAlloted'] ."</td>
+                <td>" . $row['settlementDeadline'] ."</td>
+                <td>" . ($row['resolved'] == 0 ? 'No' : 'Yes') ."</td>
+            </tr>
+        ";
+        $count++;
+    }
+}
+
+if (isset($_GET['logoutDriver']) && $_GET['logoutDriver'] == true) { // Driver logout
+    unset($_SESSION['driver']);
+    header('Location: login.php');
+}
+
+// Admin functions
+function checkRegisteredLicense($serial_number) { // For license-actions
+    $conn = connect();
+    $sql =
+        "SELECT serialNumber
+        FROM tblicense
+        WHERE serialNumber='$serial_number'";
+    $rs = $conn->query($sql);
+
+    if ($rs->num_rows != 0) return true;
+    else return false;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register-license'])) { // Register driver's license
     $license_number = $_POST['license-number'];
     $check_duplicate = checkDuplicateLicense($license_number);
 
@@ -159,6 +224,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register-license'])) {
             window.location.href = 'admin-db.php';
         </script>
     ";
+}
+
+if (isset($_POST['adminLogin']) && $_POST['adminLogin'] == true) { // Admin login
+    $admin = $_POST['username'];
+    $password = $_POST['password'];
+    $sql =
+        "SELECT *
+        FROM tbadmin
+        WHERE admin='$admin'";
+    $rs = $conn->query($sql);
+
+    if ($rs->num_rows === 0) {
+        echo "
+            <script>
+                alert('Admin does not exist!');
+                window.location.href = 'admin.php';
+            </script>
+        ";
+    } else {
+        while ($row = $rs->fetch_assoc()) {
+            if ($password != $row['password']) {
+                echo "
+                    <script>
+                        alert('Incorrect password!');
+                        window.location.href = 'admin.php';
+                    </script>
+                ";
+            } else {
+                $_SESSION['admin'] = $admin;
+                header('Location: admin-db.php');
+            }
+        }
+    }
+}
+
+if (isset($_GET['logoutAdmin']) && $_GET['logoutAdmin'] == true) { // Logout admin
+    unset($_SESSION['admin']);
+    header('Location: admin.php');
 }
 
 // License actions
@@ -298,7 +401,7 @@ function viewLicenseViolations($serial_number) {
     if ($rs->num_rows === 0) {
         echo "
             <tr>
-                <td colspan='5' style='text-align: center;'><i>no violations</td>
+                <td colspan='7' style='text-align: center;'><i>no violations</td>
             </tr>
         ";
     }
@@ -346,8 +449,8 @@ if (isset($_GET['delete-violation-record']) && $_GET['delete-violation-record'] 
     $serial_number = $_GET['serial-number'];
     $violation_id = $_GET['violation-id'];
 
-    $check = checkUnresolvedViolations($serial_number);
-    if ($check == true) {
+    $resolved = checkUnresolvedViolationByID($violation_id);
+    if ($resolved == false) {
         returnToLicenseActions($serial_number,"Unresolved violation!");
         return;
     }
@@ -382,10 +485,31 @@ function checkSuspensionRevocationDeadlines() { // Suspend/revoke licenses not r
     }
 }
 
+function checkUnresolvedViolationByID($violation_id) { // Check individual violation status
+    $conn = connect();
+    $sql =
+        "SELECT resolved
+        FROM tbviolations
+        WHERE violationId='$violation_id'";
+    $rs = $conn->query($sql);
+
+    if ($rs->num_rows === 0) {
+        $resolved = true;
+    } else {
+        $row = $rs->fetch_assoc();
+        if ($row['resolved'] == 0) $resolved = false;
+        else $resolved = true;
+    }
+
+    return $resolved;
+}
+
 function checkUnresolvedViolations($serial_number) { // Check unresolved violations
     $conn = connect();
     $sql =
-        "SELECT resolved FROM tbviolations WHERE licenseSN='$serial_number'";
+        "SELECT resolved
+        FROM tbviolations
+        WHERE licenseSN='$serial_number'";
     $rs = $conn->query($sql);
 
     if ($rs->num_rows === 0) {
@@ -441,7 +565,9 @@ function viewAllLicense() {
 function getLicenseInfo($serial_number) {
     $conn = connect();
     $sql =
-        "SELECT * FROM tblicense WHERE serialNumber='$serial_number'";
+        "SELECT *
+        FROM tblicense
+        WHERE serialNumber='$serial_number'";
     $rs = $conn->query($sql);
     
     while ($row = $rs->fetch_assoc()) {

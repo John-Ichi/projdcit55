@@ -1,6 +1,10 @@
 <?php
 include '_functions.php';
 
+if (!isset($_SESSION['admin'])) {
+    header('Location: admin.php');
+}
+
 if (!isset($_GET['serial-number'])) {
     header('Location: admin-db.php');
 } else {
@@ -138,7 +142,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="renewModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">License Renewal</h5>
@@ -160,7 +164,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="suspendModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">License Suspension</h5>
@@ -181,7 +185,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="unsuspendModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Suspend License</h5>
@@ -202,7 +206,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="revokeModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Suspend License</h5>
@@ -223,7 +227,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="unrevokeModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Suspend License</h5>
@@ -244,7 +248,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="fileViolationModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Suspend License</h5>
@@ -287,7 +291,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="editInformationModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Information</h5>
@@ -324,7 +328,7 @@ checkSuspensionRevocationDeadlines();
     </div>
 
     <div class="modal" tabindex="-1" id="deleteLicenseRecordModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Delete</h5>

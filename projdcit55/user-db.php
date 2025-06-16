@@ -34,16 +34,17 @@ if (!isset($_SESSION['driver'])) {
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="login.php">Login</a>
+                            <a class="nav-link active" aria-current="page" href="#">Account</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="admin.php">Admin</a>
                         </li>
                     </ul>
                 </div>
+                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
             </div>
         </nav>
 
@@ -104,11 +105,6 @@ if (!isset($_SESSION['driver'])) {
             </div>
         </div>
 
-        <div class="row">
-            <div class="d-flex justify-content-center">
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal" style="margin-top: 0.5rem;">Logout</button>
-            </div>
-        </div>
     </div>
 
     <div class="modal" tabindex="-1" id="logoutModal">
