@@ -1,0 +1,365 @@
+body {
+    background: #e7e5ff;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body > header {
+    margin-bottom: 0 !important;
+}
+
+.bg-blob {
+    position: fixed;
+    top: -120px;
+    left: -120px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle at 60% 40%, #4169e1 0%, #e3eafd 100%);
+    opacity: 0.18;
+    filter: blur(40px);
+    z-index: 0;
+    animation: blobMove 12s ease-in-out infinite alternate;
+}
+@keyframes blobMove {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.2) translate(60px, 40px); }
+}
+
+.container,
+.login-container,
+.login-container > .row,
+.login-container > .row > .col-12,
+.login-card-split {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.login-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    margin-top: 0 !important;
+}
+
+.login-card,
+.login-card-split {
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(65, 105, 225, 0.15);
+    background: #fff;
+    transition: box-shadow 0.3s, transform 0.3s, border 0.3s;
+    border: 1px solid #e3eafd;
+    position: relative;
+    overflow: hidden;
+}
+.login-card-split {
+    display: flex;
+    width: 700px;
+    min-height: 400px;
+    max-width: 95vw;
+}
+.login-card-split:hover {
+    box-shadow: 0 24px 64px 0 rgba(65, 105, 225, 0.22);
+    border: 1.5px solid #4169e1;
+    transform: translateY(-8px) scale(1.025);
+}
+.login-card-left {
+    flex: 1 1 0;
+    background: linear-gradient(135deg, #4169e1 0%, #e3eafd 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+}
+.login-card-left .bi {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+.login-card-left h2 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.login-card-left p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+.login-card-right {
+    flex: 1 1 0;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+}
+
+@media (max-width: 900px) {
+    .login-card-split {
+        width: 98vw;
+    }
+}
+@media (max-width: 700px) {
+    .login-card-split {
+        flex-direction: column;
+        min-height: unset;
+        width: 98vw;
+    }
+    .login-card-left, .login-card-right {
+        padding: 2rem 1rem;
+    }
+    .login-container {
+        min-height: unset;
+        margin-top: 0.5rem;
+    }
+}
+
+.animate-login-card {
+    animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-login-form input:focus {
+    border-color: #4169e1;
+    box-shadow: 0 0 0 0.2rem rgba(65, 105, 225, 0.15);
+}
+
+.animate-login-form input {
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.animate-login-form label {
+    font-weight: 500;
+    color: #4169e1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.animate-login-form .mb-3:last-of-type {
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+.animate-login-form .mb-3:last-of-type::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #e3eafd 0%, #4169e1 100%);
+    margin-top: 1.2rem;
+    opacity: 0.5;
+}
+
+.btn-primary.animate-login-btn {
+    background: #4169e1;
+    border: none;
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(65, 105, 225, 0.08);
+}
+.btn-primary.animate-login-btn:hover, .btn-primary.animate-login-btn:focus {
+    background: #27408b;
+    box-shadow: 0 4px 16px rgba(65, 105, 225, 0.15);
+    transform: translateY(-2px) scale(1.03);
+}
+.btn-primary.animate-login-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(65, 105, 225, 0.15);
+}
+
+h3.text-primary {
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 3;
+    position: relative;
+}
+
+/* --- Redesigned Navbar/Header --- */
+.navbar {
+    background: linear-gradient(135deg, #4169e1 0%, #e3eafd 50%, #4169e1 100%);
+    box-shadow: 0 8px 32px rgba(65, 105, 225, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 20px 20px;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    min-height: 55px;
+    position: relative;
+    z-index: 10;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+    gap: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: translateY(-1px);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand i {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.nav-link {
+    color: #eaf0fb !important;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav-link.active, .nav-link:hover {
+    background: rgba(255,255,255,0.10);
+    color: #fff !important;
+}
+
+.navbar-nav .nav-link i,
+.table th i {
+    margin-right: 0.18rem;
+    vertical-align: middle;
+    font-size: 1.1rem;
+}
+
+.btn-logout {
+    background: #fff;
+    color: #dc3545;
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.5rem 1.3rem;
+    box-shadow: 0 2px 8px rgba(35,64,160,0.10);
+    transition: background 0.2s, color 0.2s;
+    margin-right: 3rem;
+}
+.btn-logout:hover {
+    background: #dc3545;
+    color: #fff;
+}
+
+/* HEADER DESIGN FROM ADMIN-CUSTOM.CSS */
+.custom-header {
+    background: linear-gradient(135deg, #2340a0 0%, #4169e1 50%, #2340a0 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1.5px solid #eaf0fb;
+    box-shadow: 0 4px 24px rgba(35,64,160,0.10);
+    padding: 1.2rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-radius: 0 !important;
+}
+.header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.logo-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    color: #fff !important;
+    text-shadow: 0 2px 8px rgba(35,64,160,0.10);
+    margin-left: 2rem;
+}
+.logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4169e1 60%, #ffb347 100%);
+    border-radius: 50%;
+    width: 2.8rem;
+    height: 2.8rem;
+    box-shadow: 0 2px 8px rgba(35,64,160,0.10);
+}
+.logo-icon i {
+    font-size: 1.6rem;
+    color: #fff;
+}
+.logo-text {
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: #fff;
+}
+.logo-accent {
+    color: #ffb347;
+    font-weight: 700;
+    margin-left: 0.15em;
+}
+.header-center {
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+}
+.navbar-nav {
+    flex-direction: row !important;
+    gap: 1.5rem;
+}
+.nav-link {
+    color: #eaf0fb !important;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    transition: background 0.2s, color 0.2s;
+}
+.nav-link.active, .nav-link:hover {
+    background: rgba(255,255,255,0.10);
+    color: #fff !important;
+}
+.navbar-nav .nav-link i,
+.table th i {
+    margin-right: 0.18rem;
+    vertical-align: middle;
+    font-size: 1.1rem;
+}
+.btn-logout {
+    background: #fff;
+    color: #dc3545;
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.5rem 1.3rem;
+    box-shadow: 0 2px 8px rgba(35,64,160,0.10);
+    transition: background 0.2s, color 0.2s;
+    margin-right: 3rem;
+}
+.btn-logout:hover {
+    background: #dc3545;
+    color: #fff;
+}

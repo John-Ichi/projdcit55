@@ -1,7 +1,7 @@
 <?php
 
 function connect() {
-    $conn = new mysqli('localhost','root','','dcit55_project');
+    $conn = new mysqli('localhost','root','','dcit55');
     return $conn;
 }
 
@@ -107,23 +107,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['driver-login'])) { // 
     $license_number = $_POST['license-number'];
     $check_registered = checkRegisteredDriver($license_number);
 
-    if ($check_registered == false) { // Check if license is registered
+    if ($check_registered == false) {
         echo "
             <script>
                 alert('License does not exist!');
                 window.location.href = 'index.php';
             </script>
         ";
-        return;
+        exit;
     } else if ($check_registered == true) {
         $sql =
-            "SELECT * FROM tblogininfo";
+            "SELECT * FROM tblogininfo WHERE licenseNumber='$license_number'";
         $rs = $conn->query($sql);
         $info = $rs->fetch_assoc();
 
-        if (password_verify($_POST['password'],$info['password'])) {
+        if ($info && password_verify($_POST['password'],$info['password'])) {
             $_SESSION['driver'] = $license_number;
             header('Location: user-db.php');
+            exit;
+        } else {
+            echo "
+                <script>
+                    alert('Incorrect password!');
+                    window.location.href = 'login.php';
+                </script>
+            ";
+            exit;
         }
     }
 }
@@ -401,7 +410,7 @@ function viewLicenseViolations($serial_number) {
     if ($rs->num_rows === 0) {
         echo "
             <tr>
-                <td colspan='7' style='text-align: center;'><i>no violations</td>
+                <td colspan='5' style='text-align: center;'><i>no violations</td>
             </tr>
         ";
     }
@@ -414,19 +423,19 @@ function viewLicenseViolations($serial_number) {
                 <td>" . $row['penaltyAlloted'] ."</td>
                 <td>" . $row['settlementDeadline'] ."</td>
                 <td>" . ($row['resolved'] == 0 ? 'No' : 'Yes') ."</td>
-                <td>
-                    <form action='_functions.php'>
-                        <input type='text' name='violation-id' value='" . $row['violationId'] ."' style='display: none;'>
-                        <input tpe='text' name='serial-number' value='" . $row['licenseSN'] . "' style='display: none;'>
-                        <button class='btn btn-sm btn-success' name='resolve-violation' value='true'>Resolve</button>
-                    </form>
-                </td>
-                <td>
-                    <form action='_functions.php'>
-                        <input type='text' name='violation-id' value='" . $row['violationId'] ."' style='display: none;'>
-                        <input tpe='text' name='serial-number' value='" . $row['licenseSN'] . "' style='display: none;'>
-                        <button class='btn btn-sm btn-warning' name='delete-violation-record' value='true'>Delete</button>
-                    </form>
+                <td class='text-center'>
+                    <div class='d-flex gap-2 justify-content-center'>
+                        <form action='_functions.php'>
+                            <input type='text' name='violation-id' value='" . $row['violationId'] ."' style='display: none;'>
+                            <input tpe='text' name='serial-number' value='" . $row['licenseSN'] . "' style='display: none;'>
+                            <button class='btn btn-sm btn-success' name='resolve-violation' value='true'>Resolve</button>
+                        </form>
+                        <form action='_functions.php'>
+                            <input type='text' name='violation-id' value='" . $row['violationId'] ."' style='display: none;'>
+                            <input tpe='text' name='serial-number' value='" . $row['licenseSN'] . "' style='display: none;'>
+                            <button class='btn btn-sm btn-danger' name='delete-violation-record' value='true'>Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         ";

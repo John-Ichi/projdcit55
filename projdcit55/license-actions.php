@@ -37,156 +37,121 @@ checkSuspensionRevocationDeadlines();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProjectLisensya</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-    </style>
 </head>
 <body>
 
     <header>
-
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand" href="#">ProjectLisensya</a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Admin</a>
-                        </li>
-                    </ul>
-                </div>
-                <a href="admin-db.php"><button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">Return</button></a>
+        <nav class="navbar navbar-expand-lg custom-header">
+          <div class="container-fluid header-flex">
+            <a class="navbar-brand logo-brand" href="#">
+              <span class="logo-icon"><i class="bi bi-shield-check"></i></span>
+              <span class="logo-text">Project<span class="logo-accent">Lisensya</span></span>
+            </a>
+            <div class="header-center">
+              <ul class="navbar-nav flex-row gap-3">
+                <li class="nav-item"><a class="nav-link" href="index.php"><i class="bi bi-house-door"></i>Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.php"><i class="bi bi-box-arrow-in-right"></i>Login</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-person-gear"></i>Admin</a></li>
+              </ul>
             </div>
+            <a href="admin-db.php" class="btn btn-logout">
+              <i class="bi bi-arrow-left"></i>Return
+            </a>
+          </div>
         </nav>
-
     </header>
 
     <div class="container">
-
-        <div class="row">
-
-            <div class="col">
-
-                <div class="row">
-                    <div class="col">
-                        <p><b>Name:</b> <?php echo $drivername; echo " [" . $serialnum . "]"?></p>
+        <div class="main-flex-row">
+            <!-- License Information Sidebar -->
+            <div class="sidebar card-style" style="min-height: 550px;">
+                <h3><i class="bi bi-person-badge me-2"></i>License Information</h3>
+                
+                <div class="license-info">
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-person me-1"></i>Driver Name</label>
+                        <div class="info-value"><?php echo $drivername; ?></div>
+                        <small class="text-muted">[<?php echo $serialnum; ?>]</small>
                     </div>
-                    <div class="col">
-                        <p><b>License Number:</b> <?php echo $licensenum?></p>
+
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-credit-card-2-front me-1"></i>License Number</label>
+                        <div class="info-value"><?php echo $licensenum; ?></div>
+                    </div>
+
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-info-circle me-1"></i>Status</label>
+                        <div class="info-value status-<?php echo $status; ?>"><?php echo $status; ?></div>
+                    </div>
+
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-gender-ambiguous me-1"></i>Sex</label>
+                        <div class="info-value"><?php echo $sex; ?></div>
+                    </div>
+
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-geo-alt me-1"></i>Address</label>
+                        <div class="info-value"><?php echo $driveraddress; ?></div>
+                    </div>
+
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-calendar-plus me-1"></i>Date Registered</label>
+                        <div class="info-value"><?php echo $dateregistered; ?></div>
+                    </div>
+
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-arrow-repeat me-1"></i>Date Renewed</label>
+                        <div class="info-value"><?php echo $daterenewed; ?></div>
+                    </div>
+
+                    <div class="info-group">
+                        <label class="form-label"><i class="bi bi-calendar-x me-1"></i>Expiration Date</label>
+                        <div class="info-value"><?php echo $expirationdate; ?></div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <p><b>Status:</b> <?php echo $status?></p>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <p><b>Sex:</b> <?php echo $sex?></p>
-                    </div>
-                    <div class="col">
-                        <p><b>Address:</b> <?php echo $driveraddress?></p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <p><b>Date Registered:</b> <?php echo $dateregistered?></p>
-                    </div>
-                    <div class="col">
-                        <p><b>Date Renewed:</b> <?php echo $daterenewed?></p>
-                    </div>
-                    <div class="col">
-                        <p><b>Expiration Date:</b> <?php echo $expirationdate?></p>
-                    </div>
-                </div>
- 
-                <div class="row">
-
-                    <div class="action-grid">
+                <h4 class="mt-4 mb-3"><i class="bi bi-gear me-2"></i>Actions</h4>
+                <div class="action-buttons">
                     <?php
                     if ($status == 'Revoked') {
-                        echo "
-                            <div class='col'>
-                                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#unrevokeModal'>Unrevoke</button>
-                            </div>
-                        ";
+                        echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#unrevokeModal"><i class="bi bi-check-circle me-1"></i>Unrevoke</button>';
                     } else {
                         if ($status == 'Suspended') {
-                            echo "
-                                <div class='col'>
-                                    <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#unsuspendModal'>Unsuspend</button>
-                                </div>
-                            ";
+                            echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#unsuspendModal"><i class="bi bi-play-circle me-1"></i>Unsuspend</button>';
                         } else {
-                            echo "
-                                <div class='col'>
-                                    <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#renewModal'>Renew</button>
-                                </div>
-                                <div class='col'>
-                                    <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#suspendModal'>Suspend</button>
-                                </div>
-                            ";
+                            echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#renewModal"><i class="bi bi-arrow-repeat me-1"></i>Renew</button>';
+                            echo '<button class="btn btn-warning w-100 mb-2" data-bs-toggle="modal" data-bs-target="#suspendModal"><i class="bi bi-pause-circle me-1"></i>Suspend</button>';
                         }
-                        echo "
-                            <div class='col'>
-                                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#revokeModal'>Revoke</button>
-                            </div>
-                        ";
+                        echo '<button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#revokeModal"><i class="bi bi-x-circle me-1"></i>Revoke</button>';
                     }
                     ?>
-
-                    <div class="col">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fileViolationModal">File Violation</button>
-                    </div>
-
-                    <div class="col">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editInformationModal">Edit Information</button>
-                    </div>
-
-                    <div class="col">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal">Delete Record</button>
-                    </div>
-                    </div>
-
-
-
+                    <button class="btn btn-info w-100 mb-2" data-bs-toggle="modal" data-bs-target="#fileViolationModal"><i class="bi bi-exclamation-triangle me-1"></i>File Violation</button>
+                    <button class="btn btn-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#editInformationModal"><i class="bi bi-pencil me-1"></i>Edit Information</button>
+                    <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal"><i class="bi bi-trash me-1"></i>Delete Record</button>
                 </div>
-
             </div>
 
-            <div class="col-7">
-
-                <table class="table">
-
-                    <tr>
-                        <th>ID</th>
-                        <th>Violation</th>
-                        <th>Penalty</th>
-                        <th>Deadline for Settlement</th>
-                        <th>Resolved</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-
-                    <?php viewLicenseViolations($serialnum)?>
-                </table>
-
+            <!-- Violations Table -->
+            <div class="flex-main-content">
+                <div class="card-style">
+                    <h3><i class="bi bi-exclamation-triangle me-2"></i>Violation Records</h3>
+                    <table class="table align-middle">
+                        <tr>
+                            <th><i class="bi bi-hash"></i>ID</th>
+                            <th><i class="bi bi-exclamation-triangle"></i>Violation</th>
+                            <th><i class="bi bi-currency-dollar"></i>Penalty</th>
+                            <th><i class="bi bi-calendar-event"></i>Deadline for Settlement</th>
+                            <th><i class="bi bi-check-circle"></i>Resolved</th>
+                            <th class="text-center"><i class="bi bi-gear"></i>Actions</th>
+                        </tr>
+                        <?php viewLicenseViolations($serialnum)?>
+                    </table>
+                </div>
             </div>
-
         </div>
-
     </div>
 
     <div class="modal" tabindex="-1" id="renewModal">
