@@ -114,30 +114,31 @@ checkSuspensionRevocationDeadlines();
                     </div>
                 </div>
 
-                <h4 class="mt-4 mb-3"><i class="bi bi-gear me-2"></i>Actions</h4>
-                <div class="action-buttons">
-                    <?php
-                    if ($status == 'Revoked') {
-                        echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#unrevokeModal"><i class="bi bi-check-circle me-1"></i>Unrevoke</button>';
-                    } else {
-                        if ($status == 'Suspended') {
-                            echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#unsuspendModal"><i class="bi bi-play-circle me-1"></i>Unsuspend</button>';
-                        } else {
-                            echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#renewModal"><i class="bi bi-arrow-repeat me-1"></i>Renew</button>';
-                            echo '<button class="btn btn-warning w-100 mb-2" data-bs-toggle="modal" data-bs-target="#suspendModal"><i class="bi bi-pause-circle me-1"></i>Suspend</button>';
-                        }
-                        echo '<button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#revokeModal"><i class="bi bi-x-circle me-1"></i>Revoke</button>';
-                    }
-                    ?>
-                    <button class="btn btn-info w-100 mb-2" data-bs-toggle="modal" data-bs-target="#fileViolationModal"><i class="bi bi-exclamation-triangle me-1"></i>File Violation</button>
-                    <button class="btn btn-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#editInformationModal"><i class="bi bi-pencil me-1"></i>Edit Information</button>
-                    <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal"><i class="bi bi-trash me-1"></i>Delete Record</button>
-                </div>
+                <!-- Action buttons moved below -->
             </div>
 
             <!-- Violations Table -->
             <div class="flex-main-content">
                 <div class="card-style">
+                    <!-- Action buttons moved here -->
+                    <div class="action-buttons mb-4">
+                    <?php
+                    if ($status == 'Revoked') {
+                        echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#unrevokeModal"><i class="bi bi-check-circle me-1"></i>Unrevoke</button>';
+                    } else {
+                        if ($status == 'Suspended') {
+                            echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#unsuspendModal"><i class="bi bi-play-circle me-1"></i>Unsuspend</button>';
+                        } else {
+                            echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#renewModal"><i class="bi bi-arrow-repeat me-1"></i>Renew</button>';
+                            echo '<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#suspendModal"><i class="bi bi-pause-circle me-1"></i>Suspend</button>';
+                        }
+                        echo '<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#revokeModal"><i class="bi bi-x-circle me-1"></i>Revoke</button>';
+                    }
+                    ?>
+                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#fileViolationModal"><i class="bi bi-exclamation-triangle me-1"></i>File Violation</button>
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editInformationModal"><i class="bi bi-pencil me-1"></i>Edit Information</button>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal"><i class="bi bi-trash me-1"></i>Delete Record</button>
+                    </div>
                     <h3><i class="bi bi-exclamation-triangle me-2"></i>Violation Records</h3>
                     <div class="table-responsive">
                         <table class="table align-middle" style="display: block; height: 476px; overflow-y: auto;">
