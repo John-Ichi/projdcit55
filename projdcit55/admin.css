@@ -1,0 +1,152 @@
+/* =====================
+   Root Variables
+   ===================== */
+:root {
+    --primary: #4361ee;
+    --secondary: #3f37c9;
+    --dark: #212529;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* =====================
+   Base Styles
+   ===================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+}
+
+/* =====================
+   Layout Containers
+   ===================== */
+.container > .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* =====================
+   Columns
+   ===================== */
+.col.d-flex, .col-7 {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 7rem;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    width: 45%;
+    max-width: 45%;
+}
+.col.d-flex {
+    padding: 2rem;
+    align-items: flex-start !important;
+}
+.col-7 {
+    padding: 2rem 2rem 3rem 2rem;
+}
+
+/* =====================
+   Admin Info Section
+   ===================== */
+.admin-info-content h2 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* =====================
+   Features List
+   ===================== */
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+.features-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--dark);
+    font-size: 1.05rem;
+}
+.features-list i {
+    color: var(--primary);
+    font-size: 1.1em;
+}
+
+/* =====================
+   Support Card
+   ===================== */
+.support-card {
+    background: rgba(67, 97, 238, 0.05);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-left: 4px solid var(--primary);
+}
+.support-card h3 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+}
+.support-card h3 i {
+    color: var(--primary);
+}
+.support-card p {
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+/* =====================
+   Support Link
+   ===================== */
+.support-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary) !important;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+.support-link:hover {
+    color: var(--secondary) !important;
+    text-decoration: underline;
+}
+.support-link i {
+    color: var(--primary);
+}
+
+/* =====================
+   Responsive
+   ===================== */
+@media (max-width: 900px) {
+    .container > .row {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    .col.d-flex, .col-7 {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 2rem;
+        padding: 1.25rem;
+    }
+}

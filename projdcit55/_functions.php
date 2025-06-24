@@ -1,7 +1,7 @@
 <?php
 
 function connect() {
-    $conn = new mysqli('localhost','root','','dcit55_project');
+    $conn = new mysqli('localhost','root','','dcit');
     return $conn;
 }
 

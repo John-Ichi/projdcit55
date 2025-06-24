@@ -50,7 +50,6 @@ if (!isset($_SESSION['driver'])) {
         </nav>
     </header>
 
-    <!-- Page Header -->
     <div class="container">
         <div class="main-flex-row">
             <div class="sidebar card-style" style="min-height: 550px;">
@@ -69,8 +68,8 @@ if (!isset($_SESSION['driver'])) {
                                 </select>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table align-middle" style="height: 408.5px; max-height: 408.5px; display: block; overflow-y: auto;">
+                        <div class="table-responsive" style="height: 408.5px; overflow-y: auto;">
+                            <table class="table align-middle">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 60px;">No</th>

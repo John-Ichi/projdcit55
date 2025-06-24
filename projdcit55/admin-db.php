@@ -84,18 +84,18 @@ checkSuspensionRevocationDeadlines();
                     </div>
                 </div>
                 <div class="row">
-                    <div class="table-responsive">
-                        <table class="table align-middle" style="display:block; height: 390px; overflow-y: auto;">
+                    <div class="table-responsive" style="height: 390px; overflow-y: auto;">
+                        <table class="table align-middle">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 110px;"><i class="bi bi-person"></i><br>Name</th>
-                                    <th scope="col" style="width: 70px;"><i class="bi bi-gender-ambiguous"></i><br>Sex</th>
-                                    <th scope="col" style="width: 100px;"><i class="bi bi-geo-alt"></i><br>Address</th>
-                                    <th scope="col" style="width: 93px; white-space: normal;"><i class="bi bi-credit-card-2-front"></i><br>License Number</th>
-                                    <th scope="col" style="width: 121px; white-space: normal;"><i class="bi bi-calendar-plus"></i><br>Date Registered</th>
-                                    <th scope="col" style="width: 101px; white-space: normal;"><i class="bi bi-arrow-repeat"></i><br>Date Renewed</th>
-                                    <th scope="col" style="width: 116px; white-space: normal;"><i class="bi bi-calendar-x"></i><br>Expiration Date</th>
-                                    <th scope="col" style="width: 91px;"><i class="bi bi-info-circle"></i><br>Status</th>
+                                    <th scope="col" style="width: 110px;">Name</th>
+                                    <th scope="col" style="width: 70px;">Sex</th>
+                                    <th scope="col" style="width: 100px;">Address</th>
+                                    <th scope="col" style="width: 93px; white-space: normal;">License Number</th>
+                                    <th scope="col" style="width: 121px; white-space: normal;">Date Registered</th>
+                                    <th scope="col" style="width: 101px; white-space: normal;">Date Renewed</th>
+                                    <th scope="col" style="width: 116px; white-space: normal;">Expiration Date</th>
+                                    <th scope="col" style="width: 91px;">Status</th>
                                     <th scope="col" style="width: 126px;">Actions</th>
                                 </tr>
                             </thead>

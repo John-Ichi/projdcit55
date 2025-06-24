@@ -114,41 +114,38 @@ checkSuspensionRevocationDeadlines();
                     </div>
                 </div>
 
-                <h4 class="mt-4 mb-3"><i class="bi bi-gear me-2"></i>Actions</h4>
-                <div class="action-buttons">
-                    <?php
-                    if ($status == 'Revoked') {
-                        echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#unrevokeModal"><i class="bi bi-check-circle me-1"></i>Unrevoke</button>';
-                    } else {
-                        if ($status == 'Suspended') {
-                            echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#unsuspendModal"><i class="bi bi-play-circle me-1"></i>Unsuspend</button>';
-                        } else {
-                            echo '<button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#renewModal"><i class="bi bi-arrow-repeat me-1"></i>Renew</button>';
-                            echo '<button class="btn btn-warning w-100 mb-2" data-bs-toggle="modal" data-bs-target="#suspendModal"><i class="bi bi-pause-circle me-1"></i>Suspend</button>';
-                        }
-                        echo '<button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#revokeModal"><i class="bi bi-x-circle me-1"></i>Revoke</button>';
-                    }
-                    ?>
-                    <button class="btn btn-info w-100 mb-2" data-bs-toggle="modal" data-bs-target="#fileViolationModal"><i class="bi bi-exclamation-triangle me-1"></i>File Violation</button>
-                    <button class="btn btn-secondary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#editInformationModal"><i class="bi bi-pencil me-1"></i>Edit Information</button>
-                    <button class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal"><i class="bi bi-trash me-1"></i>Delete Record</button>
-                </div>
             </div>
-
-            <!-- Violations Table -->
             <div class="flex-main-content">
                 <div class="card-style">
+                    <div class="action-buttons mb-4">
+                    <?php
+                    if ($status == 'Revoked') {
+                        echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#unrevokeModal"><i class="bi bi-check-circle me-1"></i>Unrevoke</button>';
+                    } else {
+                        if ($status == 'Suspended') {
+                            echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#unsuspendModal"><i class="bi bi-play-circle me-1"></i>Unsuspend</button>';
+                        } else {
+                            echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#renewModal"><i class="bi bi-arrow-repeat me-1"></i>Renew</button>';
+                            echo '<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#suspendModal"><i class="bi bi-pause-circle me-1"></i>Suspend</button>';
+                        }
+                        echo '<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#revokeModal"><i class="bi bi-x-circle me-1"></i>Revoke</button>';
+                    }
+                    ?>
+                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#fileViolationModal"><i class="bi bi-exclamation-triangle me-1"></i>File Violation</button>
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editInformationModal"><i class="bi bi-pencil me-1"></i>Edit Information</button>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLicenseRecordModal"><i class="bi bi-trash me-1"></i>Delete Record</button>
+                    </div>
                     <h3><i class="bi bi-exclamation-triangle me-2"></i>Violation Records</h3>
-                    <div class="table-responsive">
-                        <table class="table align-middle" style="display: block; height: 476px; overflow-y: auto;">
+                    <div class="table-responsive" style="height: 476px; overflow-y: auto;">
+                        <table class="table align-middle">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 65px;"><i class="bi bi-hash"></i><br>ID</th>
-                                    <th scope="col" style="width: 150.52px;"><i class="bi bi-exclamation-triangle"></i><br>Violation</th>
-                                    <th scope="col" style="width: 137.31px;"><i class="bi bi-currency-dollar"></i><br>Penalty</th>
-                                    <th scope="col" style="width: 243.97px;"><i class="bi bi-calendar-event"></i><br>Deadline for Settlement</th>
-                                    <th scope="col" style="width: 99.88px;"><i class="bi bi-check-circle"></i><br>Resolved</th>
-                                    <th scope="col" style="width: 206.31px;" colspan="2"><i class="bi bi-gear"></i><br>Actions</th>
+                                    <th scope="col" style="width: 65px;">ID</th>
+                                    <th scope="col" style="width: 150.52px;">Violation</th>
+                                    <th scope="col" style="width: 137.31px;">Penalty</th>
+                                    <th scope="col" style="width: 243.97px;">Deadline for Settlement</th>
+                                    <th scope="col" style="width: 99.88px;">Resolved</th>
+                                    <th scope="col" style="width: 206.31px;" colspan="2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
