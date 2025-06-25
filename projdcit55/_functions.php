@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['driver-login'])) { // 
     if ($check_registered == false) { // Check if license is registered
         echo "
             <script>
-                alert('License does not exist!');
+                alert('License does not exist/no account registered for license!');
                 window.location.href = 'login.php';
             </script>
         ";
