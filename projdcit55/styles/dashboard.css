@@ -30,7 +30,6 @@ body {
     letter-spacing: 0.01em;
     overflow-x: hidden;
     background-attachment: fixed;
-    /* Subtle pattern overlay */
     position: relative;
 }
 body::before {
@@ -51,7 +50,6 @@ h3 {
     font-size: 1.10rem;
 }
 
-/* ========== HEADER ========== */
 .custom-header {
     background: linear-gradient(135deg, #2340a0 0%, #4169e1 50%, #2340a0 100%);
     backdrop-filter: blur(10px);
@@ -148,7 +146,6 @@ h3 {
     color: #fff;
 }
 
-/* ========== LAYOUT ========== */
 .container {
     max-width: 1100px;
     margin-left: auto;
@@ -172,7 +169,6 @@ h3 {
     padding-right: 6rem;
 }
 
-/* ========== SIDEBAR ========== */
 .sidebar {
     background: rgba(245,250,255,0.98);
     border-right: 2px solid var(--royal-blue-light);
@@ -213,7 +209,6 @@ h3 {
     margin-top: 1rem;
 }
 
-/* ========== LICENSE INFO ========== */
 .license-info {
     margin-bottom: 1.5rem;
 }
@@ -249,7 +244,6 @@ h3 {
     transition: all 0.3s ease;
 }
 
-/* ========== CARDS ========== */
 .card-style {
     box-shadow: 0 8px 32px rgba(35,64,160,0.10), 0 2px 8px rgba(0,0,0,0.04);
     border: 1.5px solid #eaf0fb;
@@ -266,14 +260,13 @@ h3 {
     transform: translateY(-2px);
 }
 
-/* Larger text for Driver Information card */
 .card-style.mb-4.h-100 h3 {
-    font-size: 1.45rem;
+    font-size: 1rem;
 }
 .card-style.mb-4.h-100 .mb-2,
 .card-style.mb-4.h-100 .mb-2 b,
 .card-style.mb-4.h-100 .mb-2 span {
-    font-size: 1.13rem;
+    font-size: 1rem;
 }
 
 /* ========== FORMS ========== */
@@ -815,4 +808,30 @@ input:focus, select:focus, .form-control:focus, .form-select:focus {
     color: #fff !important;
     font-weight: 600;
     border: none;
+}
+
+.action-buttons, .card-style .action-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.7rem !important;
+    justify-content: flex-start;
+    align-items: center;
+}
+.action-buttons .btn, .card-style .action-buttons .btn {
+    min-width: auto !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    white-space: nowrap;
+}
+@media (max-width: 991px), (max-width: 700px), (max-width: 576px) {
+    .action-buttons, .card-style .action-buttons {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 0.7rem !important;
+    }
+    .action-buttons .btn, .card-style .action-buttons .btn {
+        width: auto !important;
+    }
 } 

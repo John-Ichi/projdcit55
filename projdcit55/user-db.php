@@ -69,14 +69,14 @@ if (!isset($_SESSION['driver'])) {
                                 </select>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table align-middle" style="height: 408.5px; max-height: 408.5px; display: block; overflow-y: auto;">
+                        <div class="table-responsive" style="height: 408.5px; overflow: auto;">
+                            <table class="table align-middle">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 60px;">No</th>
-                                        <th scope="col" style="width: 230px;">Violation Committed</th>
-                                        <th scope="col" style="width: 260px;">Penalty</th>
-                                        <th scope="col" style="width: 255px;">Deadline for Settlement</th>
+                                        <th scope="col" style="width: 190px;">Violation Committed</th>
+                                        <th scope="col" style="width: 150px;">Penalty</th>
+                                        <th scope="col" style="width: 206.5px;">Deadline for Settlement</th>
                                         <th scope="col" style="width: 80px;">Resolved</th>
                                     </tr>
                                 </thead>

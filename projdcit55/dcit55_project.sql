@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2025 at 04:26 PM
+-- Generation Time: Jun 25, 2025 at 02:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -63,7 +63,10 @@ CREATE TABLE `tblicense` (
 --
 
 INSERT INTO `tblicense` (`serialNumber`, `name`, `sex`, `address`, `licenseNumber`, `dateRegistered`, `dateRenewed`, `expirationDate`, `status`) VALUES
-(24, 'Aira Dominique Mananquil', 'Female', '21 Diosomito Subd., Ibayo Silangan, Naic, Cavite', '00000000', '2025-06-24', '2025-06-24', '2030-06-24', 'Valid');
+(24, 'Aira Dominique Mananquil', 'Female', '21 Diosomito Subd., Ibayo Silangan, Naic, Cavite', '00000000', '2025-06-24', '2025-06-24', '2030-06-24', 'Valid'),
+(25, 'John Ichiro Mananquil', 'Male', 'Tanza, Cavite', '00000001', '2025-06-25', NULL, '2030-06-25', 'Valid'),
+(26, 'Ceejay Cervantes', 'Male', 'Sabang, Naic, Cavite', '00000002', '2025-06-25', NULL, '2030-06-25', 'Valid'),
+(28, 'Test Overflow', 'Female', 'Maragondon, Cavite', 'TEST0001', '2025-06-25', NULL, '2030-06-25', 'Valid');
 
 -- --------------------------------------------------------
 
@@ -99,6 +102,20 @@ CREATE TABLE `tbviolations` (
   `settlementDeadline` date NOT NULL,
   `resolved` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbviolations`
+--
+
+INSERT INTO `tbviolations` (`violationId`, `licenseSN`, `licenseNumber`, `violationCommitted`, `penaltyAlloted`, `settlementDeadline`, `resolved`) VALUES
+(41, 24, '00000000', 'Moving Violation', 'Monetary Fine', '2025-07-02', 1),
+(42, 24, '00000000', 'Non-moving Violation', 'Monetary Fine', '2025-07-02', 1),
+(43, 24, '00000000', 'Moving Violation', 'Monetary Fine', '2025-07-02', 1),
+(44, 24, '00000000', 'Non-moving Violation', 'License Suspension', '2025-06-25', 1),
+(46, 24, '00000000', 'Non-moving Violation', 'License Revocation', '2025-07-09', 0),
+(47, 24, '00000000', 'Moving Violation', 'License Suspension', '2025-07-02', 0),
+(48, 24, '00000000', 'Moving Violation', 'Monetary Fine', '2025-07-02', 0),
+(49, 24, '00000000', 'Non-moving Violation', 'Monetary Fine', '2025-07-02', 0);
 
 --
 -- Indexes for dumped tables
@@ -146,7 +163,7 @@ ALTER TABLE `tbadmin`
 -- AUTO_INCREMENT for table `tblicense`
 --
 ALTER TABLE `tblicense`
-  MODIFY `serialNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `serialNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `tblogininfo`
@@ -158,7 +175,7 @@ ALTER TABLE `tblogininfo`
 -- AUTO_INCREMENT for table `tbviolations`
 --
 ALTER TABLE `tbviolations`
-  MODIFY `violationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `violationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables
