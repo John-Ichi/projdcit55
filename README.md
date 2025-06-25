@@ -4,6 +4,7 @@ BSCS 2A Mini Project
 Ceejay Cervantes
 John Ichiro Mananquil
 
+**Database**<br>
 Create a database named 'dcit55_project' or change the SQL connect parameters in the connect functions in the '_functions.php' file, import the SQL file found in the directory.
 
 **Navigation/simulation**<br>
