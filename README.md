@@ -7,8 +7,10 @@ John Ichiro Mananquil
 Create a database named 'dcit55_project' or change the SQL connect parameters in the connect functions in the '_functions.php' file, import the SQL file found in the directory.
 
 **Navigation/simulation**
+
 Login to admin using the following credentials:
-username: admin
+
+username: admin<br>
 password: 12345
 
 Register a 'license' and manage 'licenses' in the 'admin-db.php' page.
